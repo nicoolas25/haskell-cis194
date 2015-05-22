@@ -1,5 +1,7 @@
 module Homework1 where
 
+-- Credit card validation
+
 toDigits :: Integer -> [Integer]
 toDigits = reverse . toDigitsRev
 
@@ -21,3 +23,16 @@ sumDigits = sum . (map (sum . toDigitsRev))
 validate :: Integer -> Bool
 validate n = sumOfDigits `mod` 10 == 0
   where sumOfDigits = sumDigits $ doubleEveryOther $ toDigits n
+
+-- Hanoi
+
+type Peg = String
+
+type Move = (Peg, Peg)
+
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi 0 _ _ _ = []
+hanoi 1 a b c = [(a, b)]
+hanoi n a b c = step1 ++ [(a, b)] ++ step3
+  where step1 = hanoi (n-1) a c b
+        step3 = hanoi (n-1) c b a
