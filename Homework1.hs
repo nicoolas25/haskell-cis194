@@ -12,14 +12,13 @@ toDigitsRev n = right : (toDigitsRev remaining)
         remaining = n `div` 10
 
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther l =
-  reverse $ doubleOddIndex False $ reverse l
+doubleEveryOther l = reverse $ doubleOddIndex False $ reverse l
   where doubleOddIndex _ [] = []
         doubleOddIndex True (x:xs) = (x*2):(doubleOddIndex False xs)
         doubleOddIndex False (x:xs) = x:(doubleOddIndex True xs)
 
 sumDigits :: [Integer] -> Integer
-sumDigits = sum . (map (sum . toDigitsRev))
+sumDigits = sum . concatMap toDigitsRev
 
 validate :: Integer -> Bool
 validate n = sumOfDigits `mod` 10 == 0
