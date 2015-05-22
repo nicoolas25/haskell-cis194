@@ -15,3 +15,5 @@ doubleEveryOther l = [ if i `mod` 2 == 0 then 2 * item else item | (item, i) <- 
         indexes = [startFrom..]
         startFrom = (length l) `mod` 2
 
+sumDigits :: [Integer] -> Integer
+sumDigits = sum . (map (sum . toDigitsRev))
