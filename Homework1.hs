@@ -17,3 +17,7 @@ doubleEveryOther l = [ if i `mod` 2 == 0 then 2 * item else item | (item, i) <- 
 
 sumDigits :: [Integer] -> Integer
 sumDigits = sum . (map (sum . toDigitsRev))
+
+validate :: Integer -> Bool
+validate n = sumOfDigits `mod` 10 == 0
+  where sumOfDigits = sumDigits $ doubleEveryOther $ toDigits n
