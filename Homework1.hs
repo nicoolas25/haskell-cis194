@@ -12,10 +12,11 @@ toDigitsRev n = right : (toDigitsRev remaining)
         remaining = n `div` 10
 
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther l = [ if i `mod` 2 == 0 then 2 * item else item | (item, i) <- lWithIndex ]
-  where lWithIndex = zip l indexes
-        indexes = [startFrom..]
-        startFrom = (length l) `mod` 2
+doubleEveryOther l =
+  reverse $ doubleOddIndex False $ reverse l
+  where doubleOddIndex _ [] = []
+        doubleOddIndex True (x:xs) = (x*2):(doubleOddIndex False xs)
+        doubleOddIndex False (x:xs) = x:(doubleOddIndex True xs)
 
 sumDigits :: [Integer] -> Integer
 sumDigits = sum . (map (sum . toDigitsRev))
