@@ -24,7 +24,8 @@ frequencies l = [ (i, length r) | (i:r) <- group $ sort $ l ++ [0..9] ]
 column :: Int -> (Integer, Int) -> String
 column m (i, n) = replicate (m-n) ' ' ++ replicate n '*' ++ "=" ++ show i
 
+columns :: [(Integer, Int)] -> [String]
+columns l = map (column $ maximum $ map snd l) l
+
 histogram :: [Integer] -> String
-histogram l = unlines $ transpose $ map (column max) freqs
-  where max = maximum $ map snd freqs
-        freqs = frequencies l
+histogram = unlines . transpose . columns . frequencies
