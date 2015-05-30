@@ -10,7 +10,9 @@ skips l = map (everyNth l) [1..length l]
 
 -- Exercise 2
 
-
+localMaxima :: [Integer] -> [Integer]
+localMaxima (x:y:z:r) = if y > x && y > z then y:localMaxima (z:r) else localMaxima (y:z:r)
+localMaxima _ = []
 
 -- Exercise 3
 
