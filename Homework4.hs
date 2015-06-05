@@ -36,3 +36,16 @@ spaceTree node = case node of
   (Node _ Leaf _ _) -> True
   (Node _ _ _ Leaf) -> True
   (Node _ nodeLeft _ nodeRight) -> spaceTree nodeLeft || spaceTree nodeRight
+
+-- Exercise 3
+
+xor :: [Bool] -> Bool
+xor = foldl (/=) False
+
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\a acc -> f a : acc) []
+
+myFoldl :: (a -> b -> a) -> a -> [b] -> a
+myFoldl f base xs = foldr (flip f) base (reverse xs)
+
+
