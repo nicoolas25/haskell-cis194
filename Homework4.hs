@@ -1,3 +1,5 @@
+module Homework4 where
+
 -- Exercise 1
 
 fun1 :: [Integer] -> Integer
@@ -9,4 +11,28 @@ fun2 = sum . filter even . takeWhile (> 1) . iterate serie
 
 -- Exercise 2
 
+data Tree a = Leaf | Node Integer (Tree a) a (Tree a) deriving (Show, Eq)
 
+foldTree :: [a] -> Tree a
+foldTree = foldr insertTree Leaf
+
+insertTree :: a -> Tree a -> Tree a
+insertTree a Leaf = Node 0 Leaf a Leaf
+insertTree a (Node h left b right)
+    | hLeft < hRight || spaceTree left = Node h (insertTree a left) b right
+    | hLeft > hRight || spaceTree right = Node h left b (insertTree a right)
+    | otherwise = Node (h+1) (insertTree a left) b right
+  where hLeft      = heightTree left
+        hRight     = heightTree right
+
+heightTree :: Tree a -> Integer
+heightTree Leaf = -1
+heightTree (Node n _ _ _) = n
+
+spaceTree :: Tree a -> Bool
+spaceTree node = case node of
+  Leaf -> False
+  (Node _ Leaf _ Leaf) -> False
+  (Node _ Leaf _ _) -> True
+  (Node _ _ _ Leaf) -> True
+  (Node _ nodeLeft _ nodeRight) -> spaceTree nodeLeft || spaceTree nodeRight
