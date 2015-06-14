@@ -1,5 +1,8 @@
 module Homework4 where
 
+import Control.Arrow
+import Data.List
+
 -- Exercise 1
 
 fun1 :: [Integer] -> Integer
@@ -48,4 +51,12 @@ map' f = foldr (\a acc -> f a : acc) []
 myFoldl :: (a -> b -> a) -> a -> [b] -> a
 myFoldl f base xs = foldr (flip f) base (reverse xs)
 
+-- Exercise 4
 
+-- Credit goes to https://github.com/miraks/cis194 on this one.
+-- Thanks for `uncurry` and `&&&`.
+
+sieveSundaram :: Integer -> [Integer]
+sieveSundaram = map (\x -> 2*x+1) . (uncurry (\\)) . (toN &&& sieve)
+  where toN n = [1..n]
+        sieve n = [e | j <- [1..n], i <- [1..j], e <- [i+j+2*i*j], e <= n]
